@@ -5,8 +5,20 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:PasswordGenerator"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
-    <Grid>
-        
-    </Grid>
+        Title="Password Generator" Height="450" Width="800">
+    <Canvas>
+        <Rectangle x:Name="capitalIndicator" Fill="#ff0000" Height="32" Canvas.Left="99" Stroke="Transparent" Canvas.Top="99" Width="102"/>
+        <Rectangle x:Name="lowercaseIndicator" Fill="#ff0000" Height="32" Canvas.Left="269" Stroke="Transparent" Canvas.Top="99" Width="102"/>
+        <Rectangle x:Name="numberIndicator" Fill="#ff0000" Height="32" Canvas.Right="99" Stroke="Transparent" Canvas.Top="99" Width="102"/>
+        <Rectangle x:Name="specialIndicator" Fill="#ff0000" Height="32" Canvas.Right="269" Stroke="Transparent" Canvas.Top="99" Width="102"/>
+
+        <Button x:Name="CapitalLetters" Content="Capital Letters" Height="30" Width="100" Canvas.Left="100" Canvas.Top="100" Click="CapitalLetters_Click"></Button>
+        <Button x:Name="LowerCase" Content="Lowercase Letters" Height="30" Width="100" Canvas.Left="270" Canvas.Top="100" Click="LowerCase_Click"></Button>
+        <Button x:Name="SpecialChars" Content="Special Characters" Height="30" Width="100" Canvas.Right="270" Canvas.Top="100" Click="SpecialChars_Click"></Button>
+        <Button x:Name="Numbers" Content="Numbers" Height="30" Width="100" Canvas.Right="100" Canvas.Top="100" Click="Numbers_Click"></Button>
+        <TextBox x:Name="Length" Height="20" TextAlignment="Center"  TextWrapping="Wrap" Text="" Width="50" Canvas.Left="375" Canvas.Top="175"/>
+        <Label Content="Length:" Canvas.Left="375" Canvas.Top="150"/>
+        <TextBox x:Name="output"  Height="40" TextWrapping="Wrap" Text="" Width="254" Canvas.Left="270" Canvas.Top="255"/>
+        <Button Content="Generate" Width="85" Canvas.Left="361" Canvas.Top="300" Height="25" Click="Generate_Click"/>
+    </Canvas>
 </Window>
