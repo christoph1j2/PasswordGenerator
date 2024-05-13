@@ -1,5 +1,7 @@
-﻿using System;
+﻿using Microsoft.Win32;
+using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -30,10 +32,13 @@ namespace PasswordGenerator
         private bool specialChars = false;
         private bool numbers = false;
         private int length;
+
+        string pw;
         public MainWindow()
         {
             InitializeComponent();
             this.WindowStartupLocation = WindowStartupLocation.CenterScreen;
+            this.ResizeMode = ResizeMode.NoResize;
             Closing += OnWindowExit;
         }
 
@@ -62,7 +67,6 @@ namespace PasswordGenerator
             try
             {
                 length = Convert.ToInt32(Length.Text);
-
             }
             catch (FormatException)
             {
@@ -79,7 +83,19 @@ namespace PasswordGenerator
             }
             else
             {
-                output.Text = CreatePassword(lowerCase, capitalLetters, numbers, specialChars, length);
+                pw = CreatePassword(lowerCase, capitalLetters, numbers, specialChars, length);
+                output.Text = pw;
+            }
+        }
+        private void Save_Click(object sender, RoutedEventArgs e)
+        {
+            if (output.Text.Contains("Select")||output.Text.Contains("Invalid")|| String.IsNullOrEmpty(output.Text)|| String.IsNullOrWhiteSpace(output.Text))
+            {
+                MessageBox.Show("Error saving the password.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+            else
+            {
+                SavePassword();
             }
         }
         private static string CreatePassword(bool lc, bool up, bool dg, bool sc, int len)
@@ -116,6 +132,24 @@ namespace PasswordGenerator
             }
             Console.WriteLine(result.ToString());
             return result.ToString();
+        }
+        private void SavePassword()
+        {
+            SaveFileDialog saveFileDialog = new SaveFileDialog();
+            saveFileDialog.Filter = "Text files (*.txt)|*.txt";
+            saveFileDialog.Title = "Save Password";
+            if (saveFileDialog.ShowDialog() == true)
+            {
+                string password = pw;
+                try
+                {
+                    File.WriteAllText(saveFileDialog.FileName, password);
+                }
+                catch (Exception ex)
+                {
+                    err.Text = "Error saving password: " + ex.Message;
+                }
+            }
         }
         private void OnWindowExit(object sender, System.ComponentModel.CancelEventArgs e)
         {
